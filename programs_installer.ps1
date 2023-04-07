@@ -1,6 +1,7 @@
 $base_path = "\\NASCLOUD\FileServer$\lucibello.fra\"
 $programs_path = $base_path + "programs\"
 
+$WindowsPCHealthCheck = "WindowsPCHealthCheckSetup.msi"
 $Chrome = "ChromeSetup.exe"
 $GoSign = "GoSign-Desktop-installer-win32.msi"
 $Java = "jre-8u181-windows-i586"
@@ -23,6 +24,7 @@ $simple_installers = @(
 )
 
 $installers = @(
+	$WindowsPCHealthCheck,
 	$GoSign,
 	$Java,
 	$LibreOffice,
