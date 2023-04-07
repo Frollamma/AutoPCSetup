@@ -36,14 +36,14 @@ foreach ( $program in $programs ) {
 
 Write-Host "Running simple installers..."			# You don't need to pass any option, the installation is straightforward
 foreach ( $installer in $simple_installers ) {
-	Write-Host ("Installing " + $installer)
+	Write-Host ("Installing " + $installer + "...")
 	Start-Process ($programs_path + $installer) -Wait
 	Write-Host "Installation completed."
 }
 
 Write-Host "Running installers..."
 foreach ( $installer in $installers ) {
-	Write-Host ("Installing " + $installer)
+	Write-Host ("Installing " + $installer + "...")
 	#Start-Process ($programs_path + $installer) -Wait # -ArgumentList "/quiet /passive /norestart INSTALLDIR=C:\Program Files\My Program" -Wait
 	Start-Process ($programs_path + $installer) -Wait -ArgumentList "/quiet /passive /norestart" -Wait
 	Write-Host "Installation completed."
