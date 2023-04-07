@@ -31,7 +31,7 @@ $installers = @(
 
 Write-Host "Copying portable programs..." 
 foreach ( $program in $programs ) {
-    cp ($programs_path + $program) .
+	cp ($programs_path + $program) .
 }
 
 Write-Host "Running simple installers..."			# You don't need to pass any option, the isntallation is straightforward
