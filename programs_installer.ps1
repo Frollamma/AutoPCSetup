@@ -31,9 +31,9 @@ $installers = @(
 	$Sophos
 )
 
-Write-Host "Copying portable programs..." 
+Write-Host "Copying portable programs in Desktop..." 
 foreach ( $program in $programs ) {
-	cp ($programs_path + $program) .
+	cp ($programs_path + $program) "%UserProfile%\Desktop"
 }
 
 Write-Host "Running simple installers..."			# You don't need to pass any option, the installation is straightforward
