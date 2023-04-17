@@ -12,8 +12,18 @@ Write-Host "Add IP Address " $ipAddress
 $interface = Get-NetAdapter | Where-Object { $_.Name -eq $interfaceName }
 $interfaceIndex = $interface.ifIndex
 
-# Set IP address, subnet mask and gateway
-New-NetIPAddress -IPAddress $ipAddress -PrefixLength $prefixLength -DefaultGateway $gateway -InterfaceIndex $interfaceIndex
+# Remember to connect Ethernet before running the script!
+
+# Check if IP address already exists
+$existingIp = Get-NetIPAddress -InterfaceIndex $interfaceIndex | Where-Object { $_.IPAddress -eq $ipAddress }
+if ($existingIp) {
+    # IMPR: Never tested
+    Set-NetIPAddress -InputObject $existingIp -PrefixLength $prefixLength -DefaultGateway $gateway
+}
+else {
+    # Set IP address, subnet mask and gateway
+    New-NetIPAddress -IPAddress $ipAddress -PrefixLength $prefixLength -DefaultGateway $gateway -InterfaceIndex $interfaceIndex
+}
 
 # Set-NetIPAddress -InterfaceIndex 2 -PrefixLength 24 -PrefixOrigin Manual -SubnetMask 255.255.255.0
 
