@@ -1,5 +1,5 @@
 param (
-	[int]$installation_delay = 300
+	[int]$installationDelay = 300
 )
 
 $base_path = "\\NASCLOUD\FileServer$\lucibello.fra\"
@@ -37,7 +37,7 @@ $installers = @(
 Write-Host "Copying portable programs in Desktop..." 
 foreach ( $program in $programs ) {
 	cp ($programs_path + $program) .	# "%UserProfile%\Desktop" doesn't work
-	Start-Sleep -Seconds $installation_delay
+	Start-Sleep -Seconds $installationDelay
 }
 
 Write-Host "Running simple installers..."			# You don't need to pass any option, the installation is straightforward
@@ -45,7 +45,7 @@ foreach ( $installer in $simple_installers ) {
 	Write-Host ("Installing " + $installer + "...")
 	Start-Process ($programs_path + $installer) -Wait
 	Write-Host "Installation completed."
-	Start-Sleep -Seconds $installation_delay
+	Start-Sleep -Seconds $installationDelay
 }
 
 Write-Host "Running installers..."
@@ -54,9 +54,15 @@ foreach ( $installer in $installers ) {
 	#Start-Process ($programs_path + $installer) -Wait # -ArgumentList "/quiet /passive /norestart INSTALLDIR=C:\Program Files\My Program"
 	Start-Process ($programs_path + $installer) -Wait -ArgumentList "/quiet /passive /norestart"
 	Write-Host "Installation completed."
-	Start-Sleep -Seconds $installation_delay
+	Start-Sleep -Seconds $installationDelay
 }
 
 # Ad hoc installation commands
 
-Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --nofeedback --dumpfeedback"
+# Sophos
+Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --dumpfeedback"
+
+# Olivetti driver
+Start-Process "\\192.168.98.4\condivisa\Driver e software\Kx82_UPD_Olivetti\KXDriver\KmInstall.exe"
+
+# Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --nofeedback"
