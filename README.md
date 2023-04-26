@@ -18,6 +18,12 @@ or run the following command to allow execution of scripts just for current user
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
+Sometimes I simply use
+
+```
+Set-ExecutionPolicy Bypass
+```
+
 # Known problems
 
 uninstaller script doesn't work... The problem, at the moment, is near `$program_obj.Uninstall()`
