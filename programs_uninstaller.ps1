@@ -1,5 +1,7 @@
 $programs = @(
 	"Microsoft 365",
+	"Word",
+	"Excel",
 	"OneDrive",
 	"OneNote",
 	"Office"# Office 16
