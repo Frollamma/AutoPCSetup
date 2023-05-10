@@ -15,8 +15,17 @@ $apps = @(
 )
 
 foreach ($program in $programs) {
-	$program_obj = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -like "*$program*" }
-	$program_obj.Uninstall()
+	$program_objs = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -like "*$program*" }
+
+	foreach ($program_obj in $program_objs) {
+		$program_obj.Uninstall()
+	}
+	
+	$program_obj = Get-Package -Provider Programs -IncludeWindowsInstaller | Where-Object { $_.Name -like "*$program*" }
+
+	foreach ($program_obj in $program_objs) {
+		Uninstall-Package -Name "$program_obj.Name"
+	}
 }
 
 foreach ($app in $apps) {
