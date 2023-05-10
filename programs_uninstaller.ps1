@@ -24,7 +24,7 @@ foreach ($program in $programs) {
 	$program_obj = Get-Package -Provider Programs -IncludeWindowsInstaller | Where-Object { $_.Name -like "*$program*" }
 
 	foreach ($program_obj in $program_objs) {
-		Uninstall-Package -Name "$program_obj.Name"
+		Uninstall-Package -Name $program_obj.Name
 	}
 }
 
