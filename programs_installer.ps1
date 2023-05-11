@@ -61,9 +61,11 @@ foreach ( $installer in $installers ) {
 # Ad hoc installation commands
 
 # Sophos
+Write-Host "Installaling Sophos..."
 Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --dumpfeedback"
 
 # Olivetti driver
+Write-Host "Installaling Olivetti driver..."
 Start-Process "\\192.168.98.4\condivisa\Driver e software\Kx82_UPD_Olivetti\KXDriver\KmInstall.exe"
 
 # Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --nofeedback"
