@@ -36,25 +36,26 @@ $installers = @(
 
 Write-Host "Copying portable programs in Desktop..." 
 foreach ( $program in $programs ) {
+	Write-Host ("Copying " + $installer + "...")
+	# Start-Sleep -Seconds $installationDelay
 	cp ($programs_path + $program) .	# "%UserProfile%\Desktop" doesn't work
-	Start-Sleep -Seconds $installationDelay
 }
 
 Write-Host "Running simple installers..."			# You don't need to pass any option, the installation is straightforward
 foreach ( $installer in $simple_installers ) {
 	Write-Host ("Installing " + $installer + "...")
+	Start-Sleep -Seconds $installationDelay
 	Start-Process ($programs_path + $installer) -Wait
 	Write-Host "Installation completed."
-	Start-Sleep -Seconds $installationDelay
 }
 
 Write-Host "Running installers..."
 foreach ( $installer in $installers ) {
 	Write-Host ("Installing " + $installer + "...")
+	Start-Sleep -Seconds $installationDelay
 	#Start-Process ($programs_path + $installer) -Wait # -ArgumentList "/quiet /passive /norestart INSTALLDIR=C:\Program Files\My Program"
 	Start-Process ($programs_path + $installer) -Wait -ArgumentList "/quiet /passive /norestart"
 	Write-Host "Installation completed."
-	Start-Sleep -Seconds $installationDelay
 }
 
 # Ad hoc installation commands
