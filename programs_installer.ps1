@@ -62,10 +62,14 @@ foreach ( $installer in $installers ) {
 
 # Sophos
 Write-Host "Installaling Sophos..."
+Start-Sleep -Seconds $installationDelay
 Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --dumpfeedback"
+Write-Host "Installation completed."
 
 # Olivetti driver
 Write-Host "Installaling Olivetti driver..."
+Start-Sleep -Seconds $installationDelay
 Start-Process "\\192.168.98.4\condivisa\Driver e software\Kx82_UPD_Olivetti\KXDriver\KmInstall.exe"
+Write-Host "Installation completed."
 
 # Start-Process ($programs_path + $Sophos) -Wait -ArgumentList "--quiet --nofeedback"
