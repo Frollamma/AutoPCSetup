@@ -29,6 +29,6 @@ foreach ($dir in $directories) {
 	$command = "& `'$winrarPath`' a `'$archive`' `'$path`'"
 	Start-Process -FilePath "powershell.exe" -ArgumentList $command -Wait
 	
-	Write-Host "Copying $archive to $backupPath"
-	Copy-Item -Path $archive -Destination $backupPath
+	Write-Host "Moving $archive to $backupPath"
+	Move-Item -Path $archive -Destination $backupPath
 }
