@@ -8,7 +8,7 @@ $drive = "C"
 
 $directories = @(
 	"scanner",
-	#	"Users\" + $user + "\Desktop\",
+	"Users\$user\Desktop",
 	"Users\$user\Documents",
 	"Users\$user\Downloads"
 )
