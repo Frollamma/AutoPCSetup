@@ -9,3 +9,6 @@ if (!(Test-Path -Path $folderPath -PathType Container)) {
 
 # Share the folder with read/write permissions for the user "scanner2"
 New-SmbShare -Name "scanner" -Path $folderPath -FullAccess "scanner2"
+
+
+# i tied https://4sysops.com/archives/managing-windows-file-shares-with-powershell/ and it doesn't work
