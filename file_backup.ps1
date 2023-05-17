@@ -12,7 +12,7 @@ $directories = @(
 	"scanner",
 	#	"Users\" + $user + "\Desktop\",
 	"Users\$user\Documents",
-	"Users\$user\Download"
+	"Users\$user\Downloads"
 )
 
 foreach ($dir in $directories) {
