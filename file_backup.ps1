@@ -20,8 +20,8 @@ foreach ($dir in $directories) {
 
 	# Write-Host "Copying " + $dir
 	# copy /y ("\\" + $ip + "\c$\" + $dir + "\*") $dir
-	Write-Host "Zipping " + $dir
-	$zipDir = $dir + ".zip"
+	Write-Host "Zipping $dir"
+	$zipDir = $dir + ".rar"
 	$command = "& `'$winrarPath`' a `'$zipDir`' `'$dir`'"
 	Start-Process -FilePath "powershell.exe" -ArgumentList $command -Wait
 }
