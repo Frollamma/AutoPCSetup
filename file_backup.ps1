@@ -1,5 +1,3 @@
-# Run this in C:\
-
 param (
 	[string]$ip,
 	[string]$user
