@@ -15,7 +15,13 @@ $directories = @(
 
 foreach ($dir in $directories) {
 	$path = "\\$ip\$drive$\$dir"
-	$backupPath = "C:\scanner"
+	$backupPath = "C:\backup"
+
+	# Creates backup folder if it doesn't exist
+	if (-not (Test-Path -Path $backupPath)) {
+		New-Item -ItemType Directory -Path $backupPath | Out-Null
+	}
+
 
 	$archive = $path + ".rar"
 	Write-Host "Zipping $path to $archive"
