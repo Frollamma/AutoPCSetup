@@ -16,12 +16,12 @@ $directories = @(
 )
 
 foreach ($dir in $directories) {
-	$dir = "\\$ip\$drive$\$dir"
+	$path = "\\$ip\$drive$\$dir"
 
 	# Write-Host "Copying " + $dir
 	# copy /y ("\\" + $ip + "\c$\" + $dir + "\*") $dir
-	Write-Host "Zipping $dir"
-	$zipDir = $dir + ".rar"
-	$command = "& `'$winrarPath`' a `'$zipDir`' `'$dir`'"
+	Write-Host "Zipping $path"
+	$zipDir = $path + ".rar"
+	$command = "& `'$winrarPath`' a `'$zipDir`' `'$path`'"
 	Start-Process -FilePath "powershell.exe" -ArgumentList $command -Wait
 }
