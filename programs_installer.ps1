@@ -10,6 +10,7 @@ $Chrome = "ChromeSetup.exe"
 $GoSign = "GoSign-Desktop-installer-win32.msi"
 $Java = "jre-8u181-windows-i586"
 $LibreOffice = "LibreOffice.msi"
+$Webex = "Webex.exe"
 $AcrobatReader = "readerdc64.exe"
 $Simel = "Simel Maggioli Quarto.jnlp"
 $TeamViewerClient = "TeamViewerQS-idc3gq7dvg.exe"
@@ -31,7 +32,8 @@ $simple_installers = @(
 $installers = @(
 	$WindowsPCHealthCheck,
 	$GoSign,
-	$LibreOffice
+	$LibreOffice,
+	$Webex
 )
 
 Write-Host "Copying portable programs in Desktop..." 
