@@ -1,20 +1,24 @@
 param (
 	[int]$installationDelay = 300
+	[bool]$copyLocally = $false
+	[bool]$blocking = $false
 )
 
 $base_path = "\\NASCLOUD\FileServer$\lucibello.fra\"
 
-Write-Host "Copying installation files in local folder..."
-# Create "INSTALLATION" folder if missing
-$installation_path = "INSTALLATION"
-if (-not (Test-Path $installation_path)) {
-	New-Item -ItemType Directory -Path $installation_path | Out-Null
+if ($copyLocally) {
+	Write-Host "Copying installation files in local folder..."
+	# Create "INSTALLATION" folder if missing
+	$installation_path = "INSTALLATION"
+	if (-not (Test-Path $installation_path)) {
+		New-Item -ItemType Directory -Path $installation_path | Out-Null
+	}
+
+	# Copy all contents of $base_path into "INSTALLATION" folder
+	Copy-Item -Path $base_path -Destination $installation_path -Recurse -Force
+	$base_path = "INSTALLATION\lucibello.fra"
 }
 
-# Copy all contents of $base_path into "INSTALLATION" folder
-Copy-Item -Path $base_path -Destination $installation_path -Recurse -Force
-
-$base_path = "INSTALLATION\lucibello.fra"
 $programs_path = $base_path + "programs\"
 
 $WindowsPCHealthCheck = "WindowsPCHealthCheckSetup.msi"
@@ -59,7 +63,13 @@ Write-Host "Running simple installers..."			# You don't need to pass any option,
 foreach ( $installer in $simple_installers ) {
 	Write-Host ("Installing " + $installer + "...")
 	Start-Sleep -Seconds $installationDelay
-	Start-Process ($programs_path + $installer) -Wait
+
+	if ($blocking) {
+		Start-Process ($programs_path + $installer) -Wait
+	} else {
+		Start-Process ($programs_path + $installer)
+	}
+	
 	Write-Host "Installation completed."
 }
 
