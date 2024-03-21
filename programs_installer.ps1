@@ -1,7 +1,7 @@
 param (
-	[int]$installationDelay = 300
-	[bool]$copyLocally = $false
-	[bool]$blocking = $false
+	[int]$installationDelay = 300,
+	[bool]$copyLocally = $false,
+	[bool]$blocking = $true
 )
 
 $base_path = "\\NASCLOUD\FileServer$\lucibello.fra\"
