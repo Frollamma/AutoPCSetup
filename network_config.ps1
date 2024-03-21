@@ -1,33 +1,45 @@
 param (
     [string]$interfaceName = "Ethernet",
-    [string]$ipAddress = "192.168.15.200",
-    # [string]$subnetMask = "255.255.248.0",
-    [int]$prefixLength = 21, #See https://nuangel.net/2018/05/what-should-my-subnet-prefix-be/
+    [string]$ipAddress = "192.168.15.214",
+    [int]$prefixLength = 21,
     [string]$gateway = "192.168.8.249",
     [string[]]$DnsServers = @("192.168.98.5", "192.168.15.6", "8.8.8.8")
 )
 
-Write-Host "Add IP Address " $ipAddress
+Write-Host "Configuring network settings for IP Address: $ipAddress on interface: $interfaceName"
 
 $interface = Get-NetAdapter | Where-Object { $_.Name -eq $interfaceName }
+if (-not $interface) {
+    Write-Host "Interface $interfaceName not found."
+    exit
+}
 $interfaceIndex = $interface.ifIndex
 
-# Remember to connect Ethernet before running the script!
+$existingIps = Get-NetIPAddress -InterfaceIndex $interfaceIndex -AddressFamily IPv4
+$desiredIpExists = $existingIps | Where-Object { $_.IPAddress -eq $ipAddress }
 
-# Check if IP address already exists
-$existingIp = Get-NetIPAddress -InterfaceIndex $interfaceIndex | Where-Object { $_.IPAddress -eq $ipAddress }
-if ($existingIp) {
-    # IMPR: Never tested
-    Set-NetIPAddress -InputObject $existingIp -PrefixLength $prefixLength -DefaultGateway $gateway
+if (-not $desiredIpExists) {
+    Write-Host "IP address $ipAddress not found on $interfaceName, configuring it now."
+
+    # Remove all existing IPv4 addresses from the interface
+    $existingIps | Remove-NetIPAddress -Confirm:$false
+
+    # Set the new IP address
+    New-NetIPAddress -IPAddress $ipAddress -PrefixLength $prefixLength -InterfaceIndex $interfaceIndex
+} else {
+    Write-Host "IP address $ipAddress already configured on $interfaceName."
 }
-else {
-    # Set IP address, subnet mask and gateway
-    New-NetIPAddress -IPAddress $ipAddress -PrefixLength $prefixLength -DefaultGateway $gateway -InterfaceIndex $interfaceIndex
+
+# Ensure the default gateway is correctly configured
+$existingGateway = Get-NetRoute -InterfaceIndex $interfaceIndex -AddressFamily IPv4 | Where-Object { $_.DestinationPrefix -eq '0.0.0.0/0' }
+if ($existingGateway.NextHop -ne $gateway) {
+    Write-Host "Updating default gateway to $gateway."
+    $existingGateway | Remove-NetRoute -Confirm:$false
+    New-NetRoute -InterfaceIndex $interfaceIndex -DestinationPrefix '0.0.0.0/0' -NextHop $gateway
+} else {
+    Write-Host "Default gateway $gateway is already configured."
 }
-
-# Set-NetIPAddress -InterfaceIndex 2 -PrefixLength 24 -PrefixOrigin Manual -SubnetMask 255.255.255.0
-
-# New-NetIPAddress -IPAddress $ipAddress -InterfaceIndex $interfaceIndex -PrefixLength 24 -SubnetMask $subnetMask -DefaultGateway $gateway
 
 # Set DNS servers
 Set-DnsClientServerAddress -InterfaceIndex $interfaceIndex -ServerAddresses $DnsServers
+Write-Host "DNS servers updated."

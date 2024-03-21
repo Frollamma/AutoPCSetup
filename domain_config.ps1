@@ -1,5 +1,6 @@
 $domainName = "comune.local"
 $credential = Get-Credential # IMPR: This prompts you to insert the password, we want to automate this, but we don't want to store passwords in plain text
+# $credential = Import-CliXml -Path "C:\path\to\credentials.xml"
 
 Add-Computer -DomainName $domainName -Credential $credential # You can add "-Restart" to restart the PC
 

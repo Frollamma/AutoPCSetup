@@ -27,3 +27,7 @@ Set-ExecutionPolicy Bypass
 # Known problems
 
 uninstaller script doesn't work... The problem, at the moment, is near `$program_obj.Uninstall()`
+
+# Order to follow
+
+- Domain config
