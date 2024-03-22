@@ -17,7 +17,7 @@ if ($useLocalFolder) {
 		Copy-Item -Path $base_path -Destination $installation_path -Recurse -Force
 	}
 
-	$base_path = "INSTALLATION\lucibello.fra"
+	$base_path = "INSTALLATION\lucibello.fra\"
 }
 
 $programs_path = $base_path + "programs\"
