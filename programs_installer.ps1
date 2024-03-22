@@ -1,21 +1,22 @@
 param (
-	[int]$installationDelay = 300,
-	[bool]$copyLocally = $false,
+	[int]$installationDelay = 0,
+	[bool]$useLocalFolder = $true,
 	[bool]$blocking = $false
 )
 
 $base_path = "\\NASCLOUD\FileServer$\lucibello.fra\"
 
-if ($copyLocally) {
+if ($useLocalFolder) {
 	Write-Host "Copying installation files in local folder..."
 	# Create "INSTALLATION" folder if missing
 	$installation_path = "INSTALLATION"
 	if (-not (Test-Path $installation_path)) {
 		New-Item -ItemType Directory -Path $installation_path | Out-Null
+		
+		# Copy all contents of $base_path into "INSTALLATION" folder
+		Copy-Item -Path $base_path -Destination $installation_path -Recurse -Force
 	}
 
-	# Copy all contents of $base_path into "INSTALLATION" folder
-	Copy-Item -Path $base_path -Destination $installation_path -Recurse -Force
 	$base_path = "INSTALLATION\lucibello.fra"
 }
 
