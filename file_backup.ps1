@@ -1,10 +1,11 @@
 param (
 	[string]$ip,
-	[string]$user
+	[string]$user,
+	[string]$drive = "C"
 )
 
 $winrarPath = "C:\Program Files\WinRAR\WinRAR.exe"
-$drive = "C"
+
 
 $directories = @(
 	"scanner",
