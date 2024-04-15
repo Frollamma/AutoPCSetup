@@ -42,7 +42,6 @@ $programs = @(
 $simple_installers = @(
 	$Chrome,
 	$Java,
-	$AcrobatReader,
 	$WinRAR
 )
 
@@ -84,6 +83,12 @@ foreach ( $installer in $installers ) {
 }
 
 # Ad hoc installation commands
+Write-Host "Starting ad hoc installations..."
+
+# Adobe reader
+Write-Host "Installaling Adobe Reader..."
+Start-Sleep -Seconds $installationDelay
+Start-Process ($programs_path + $AcrobatReader) -Wait -Wait -ArgumentList '/g IT /sl "1040" /sAll'
 
 # Sophos
 Write-Host "Installaling Sophos..."
