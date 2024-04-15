@@ -5,7 +5,7 @@ param (
 )
 
 $winrarPath = "C:\Program Files\WinRAR\WinRAR.exe"
-
+$backupPath = "C:\backup"
 
 $directories = @(
 	"scanner",
@@ -15,22 +15,29 @@ $directories = @(
 	"Users\$user\Pictures"
 )
 
+# Creates backup folder if it doesn't exist
+if (-not (Test-Path -Path $backupPath)) {
+	New-Item -ItemType Directory -Path $backupPath | Out-Null
+}
+
+$processes = @()
+foreach ($dir in $directories) {
+    $path = "\\$ip\$drive$\$dir"
+    $archive = $path + ".rar"
+    Write-Host "Zipping $path to $archive"
+    $command = "& `'$winrarPath`' a `'$archive`' `'$path`'"
+    $process = Start-Process -FilePath "powershell.exe" -ArgumentList $command -PassThru
+    $processes += $process
+}
+# Wait for all processes to complete
+$processes | Wait-Process
+
 foreach ($dir in $directories) {
 	$path = "\\$ip\$drive$\$dir"
-	$backupPath = "C:\backup"
-
-	# Creates backup folder if it doesn't exist
-	if (-not (Test-Path -Path $backupPath)) {
-		New-Item -ItemType Directory -Path $backupPath | Out-Null
-	}
-
-
 	$archive = $path + ".rar"
-	Write-Host "Zipping $path to $archive"
 
-	$command = "& `'$winrarPath`' a `'$archive`' `'$path`'"
-	Start-Process -FilePath "powershell.exe" -ArgumentList $command -Wait
-	
 	Write-Host "Moving $archive to $backupPath"
 	Move-Item -Path $archive -Destination $backupPath
 }
+
+
