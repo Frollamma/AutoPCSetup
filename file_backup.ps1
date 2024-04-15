@@ -1,6 +1,6 @@
 param (
-	[string]$ip,
-	[string]$user,
+	[Parameter(Mandatory=$true)][string]$ip,
+	[Parameter(Mandatory=$true)][string]$user,
 	[string]$drive = "C"
 )
 
