@@ -6,13 +6,13 @@ This was meant to be used at my job place, it can be generalized tho.
 
 # Setup
 
-Open powershell as administrator, run the following command to allow execution of scripts for the entire machine
+Open powershell as administrator, run the following command to allow execution ofs for the entire machine
 
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 ```
 
-or run the following command to allow execution of scripts just for current user
+or run the following command to allow execution ofs just for current user
 
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -26,8 +26,19 @@ Set-ExecutionPolicy Bypass
 
 # Known problems
 
-uninstaller script doesn't work... The problem, at the moment, is near `$program_obj.Uninstall()`
+uninstaller doesn't work... The problem, at the moment, is near `$program_obj.Uninstall()`
 
-# Order to follow
+# Steps to follow
 
-- Domain config
+- As admin user, run these scripts:
+  - Network config
+  - Domain config
+  - Enable remote Desktop
+  - Change hostname
+- Restart the PC
+- Log in as the future domain user of the PC
+- As admin user, run the followings:
+  - Scanner setup
+  - Programs uninstaller
+  - Programs installer
+  - File backup
