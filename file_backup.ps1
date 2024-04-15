@@ -41,3 +41,4 @@ foreach ($dir in $directories) {
 }
 
 
+# If I remember correctly, there's a bug that doesn't zip the subdirectories of a directly. - IMPR
