@@ -3,7 +3,7 @@ param (
     [string]$ipAddress = "192.168.15.214",
     [int]$prefixLength = 21,
     [string]$gateway = "192.168.8.249",
-    [string[]]$DnsServers = @("192.168.98.5", "192.168.15.6", "8.8.8.8")
+    [string[]]$DnsServers = @("192.168.15.6", "192.168.98.5", "8.8.8.8")
 )
 
 Write-Host "Configuring network settings for IP Address: $ipAddress on interface: $interfaceName"
